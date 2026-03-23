@@ -3,8 +3,8 @@
     internal class PuzzleBoard
     {
         public int Size { get; private set; }
-        public int[] Tiles {get; private set;}
-        public int BlankIndex { get; private set;}
+        public int[] Tiles { get; private set; }
+        public int BlankIndex { get; private set; }
         public PuzzleBoard(int size)
         {
             //create a board that is size x size
@@ -28,21 +28,57 @@
 
         public bool IsSolved()
         {
-            
+
             return false;
         }
 
         public bool CanMove(int tile)
         {
+            //tile = -1;
             //methods for validating moves
             //evaulate position of tile to moved,  possibly listing all movable candidates to choose from
             //only tiles surrounding the blank space can move into the blank space
-            return false;
+            int tileIndex = GetTileIndex(tile);
+            if (tileIndex == -1)
+            {
+                return false;
+            }
+            else
+            {
+                int tileRow = GetRowFromIndex(tileIndex);
+                int tileColumn = GetColumnFromIndex(tileIndex);
+                int blankRow = GetBlankRow();
+                int blankColumn = GetBlankColumn();
+
+                if ((Math.Abs(tileRow - blankRow)) == 1 && (Math.Abs(tileColumn - blankColumn) == 0))
+                {
+                    return true;
+                }
+                else if ((Math.Abs(tileRow - blankRow)) == 0 && (Math.Abs(tileColumn - blankColumn) == 1))
+                {
+                    return true;
+                }
+                return false;
+                //just need logic to see if our tile is adjacent to the blank
+            }
         }
 
         public void MoveTile(int tile)
         {
             //update the puzzle to reflect the position of the tiles that moved
+            if (CanMove(tile) == false)
+            {
+                //cannot move the tile.
+                return;
+            }
+            
+            int currentIndex = GetTileIndex(tile);  //find the tiles current index and store it in a variable  , index of current tile
+            int currentBIndex = BlankIndex; // store the blank index again? , index of blank tile
+            
+            Tiles[currentIndex] = 0; //the current tile will become 0,
+            Tiles[currentBIndex] = tile;  //the blankindex tile becomes populated
+            
+            BlankIndex = currentIndex;  //sets the new blank index , move the current tile to the blank tile?
         }
 
 
@@ -66,18 +102,24 @@
         public int GetBlankRow()
         {
             return BlankIndex / Size;
-
             //example if BlankIndex = 6, row = 6/4 = 1
-            
         }
 
         public int GetBlankColumn()
         {
             return BlankIndex % Size;
-
             //example if BlankIndex = 6, column = 6 % 4 = 2
         }
 
-        
+        public int GetRowFromIndex(int index)
+        {
+            return index / Size;
+        }
+
+        public int GetColumnFromIndex(int index)
+        {
+            return index % Size;
+        }
+
     }
 }
