@@ -9,5 +9,18 @@ namespace _15Puzzle
         //displays the puzzle
         //displays the prompts in the console
         //takes input from the player
+    public void ShowBoard(PuzzleBoard board)
+        {
+            //take the array and display it in a size x size pattern
+
+        }
+        public int AskForTile()
+        {
+            return tile;
+        }
+        public void ShowMessage(string message)
+        {
+
+        }
     }
 }

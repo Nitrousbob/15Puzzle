@@ -4,7 +4,7 @@
     {
         public int Size { get; private set; }
         public int[] Tiles {get; private set;}
-        
+        public int BlankIndex { get; private set;}
         public PuzzleBoard(int size)
         {
             //create a board that is size x size
@@ -23,19 +23,61 @@
                     tile++;
                 }
             }
+            BlankIndex = 0;
         }
 
-        public void CanMove()
+        public bool IsSolved()
+        {
+            
+            return false;
+        }
+
+        public bool CanMove(int tile)
         {
             //methods for validating moves
             //evaulate position of tile to moved,  possibly listing all movable candidates to choose from
             //only tiles surrounding the blank space can move into the blank space
+            return false;
         }
 
-        public void MoveTile()
+        public void MoveTile(int tile)
         {
             //update the puzzle to reflect the position of the tiles that moved
         }
-        //keeps track of the empty space
+
+
+        //loop through the board
+        public int GetTileIndex(int tile)
+        {
+            for (int i = 0; i < Tiles.Length; i++)
+            {
+                //check each value in Tiles
+                if (Tiles[i] == tile)
+                {
+                    //if it finds the title number, it returns that array index
+                    return i;
+                }
+            }
+            //if it does not find it, it returns -1
+            return -1;  //-1  is a common "not found" value
+        }
+
+        //keep track of the empty space
+        public int GetBlankRow()
+        {
+            return BlankIndex / Size;
+
+            //example if BlankIndex = 6, row = 6/4 = 1
+            
+        }
+
+        public int GetBlankColumn()
+        {
+            return BlankIndex % Size;
+
+            //example if BlankIndex = 6, column = 6 % 4 = 2
+        }
+
+        
     }
 }
